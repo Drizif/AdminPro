@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -9,8 +11,6 @@ import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
 
 // import { AppRouterModule } from '../router/app-router.module';
-import { RouterModule } from '@angular/router';
-
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -26,8 +26,9 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    SharedModule,
     RouterModule,
+    FormsModule,
+    SharedModule
   ]
 })
 export class PagesModule { }
