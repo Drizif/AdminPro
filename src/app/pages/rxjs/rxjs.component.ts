@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -13,9 +14,9 @@ export class RxjsComponent {
 
     // Si es una referencia a un observable que se quiere almacenar, 
     // usualmente se le agrega un signo de dolar
-    let i = 0;
     let reloj = ['tic', 'tac']
     const obs$ = new Observable(observer => {
+      let i = 0;
       const intervalo = setInterval(() => {
         // if (i % 2 == 0) {
         //   console.log(reloj[0]);
@@ -31,12 +32,15 @@ export class RxjsComponent {
         }
 
         if (i === 2) {
+          i = 0;
           observer.error('i llegó al valor 2');
         }
       }, 1000)
     });
 
-    obs$.subscribe(
+    obs$.pipe(
+      retry(2)
+    ).subscribe(
       valor => console.log(`Subs: ${valor}`),
       err => console.error(`Error: ${err}`),
       () => console.warn('obs$ terminado')
