@@ -11,18 +11,21 @@ import { retry } from 'rxjs/operators';
 export class RxjsComponent {
 
   constructor() {
+    this.retornaObservable().pipe(
+      retry(2)
+    ).subscribe(
+      valor => console.log(`Subs: ${valor}`),
+      err => console.error(`Error: ${err}`),
+      () => console.warn('obs$ terminado')
+    );
+  }
 
+  retornaObservable(): Observable<number> {
     // Si es una referencia a un observable que se quiere almacenar, 
     // usualmente se le agrega un signo de dolar
-    let reloj = ['tic', 'tac']
-    const obs$ = new Observable(observer => {
-      let i = 0;
+    let i = -1;
+    return new Observable<number>(observer => {
       const intervalo = setInterval(() => {
-        // if (i % 2 == 0) {
-        //   console.log(reloj[0]);
-        // } else {
-        //   console.log(reloj[1]);
-        // }
         i++;
         observer.next(i);
 
@@ -32,19 +35,10 @@ export class RxjsComponent {
         }
 
         if (i === 2) {
-          i = 0;
           observer.error('i llegó al valor 2');
         }
       }, 1000)
     });
-
-    obs$.pipe(
-      retry(2)
-    ).subscribe(
-      valor => console.log(`Subs: ${valor}`),
-      err => console.error(`Error: ${err}`),
-      () => console.warn('obs$ terminado')
-    );
   }
 
 }
