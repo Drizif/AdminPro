@@ -22,7 +22,7 @@ export class SettingsService {
   }
 
   checkCurrentTheme() {
-    const links: NodeListOf<Element> = document.querySelectorAll('.selector');;
+    const links = Array.from(document.querySelectorAll('.selector'));
 
     links.forEach(e => {
       e.classList.remove('working');
